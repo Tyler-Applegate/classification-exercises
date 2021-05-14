@@ -23,7 +23,7 @@ def get_db_data():
 # Make a function named get_titanic_data that returns the titanic data from the codeup data science 
 # database as a pandas data frame. Obtain your data from the Codeup Data Science Database.
 
-def get_titanic_data():
+def new_titanic_data():
     '''This functions reads in the titanic db from Codeup db
     and returns a pandas DataFrame with all columns/values.
     '''
@@ -34,7 +34,7 @@ def get_titanic_data():
 # database as a pandas data frame. The returned data frame should include the actual name of the species 
 # in addition to the species_ids. Obtain your data from the Codeup Data Science Database.
 
-def get_iris_data():
+def new_iris_data():
     '''
     This function joins the 'measurements' and 'species' tables from the Codeup db
     and return a pandas DataFrame will call columns/values from both tables.
@@ -49,3 +49,44 @@ def get_iris_data():
 # If they exist, use the .csv file. If the file doesn't exist, then produce the SQL and pandas necessary to 
 # create a dataframe, then write the dataframe to a .csv file with the appropriate name.
 
+def get_iris_data():
+    '''
+    This function reads in iris data from Codeup database, writes data to
+    a csv file if a local file does not exist, and returns a df.
+    '''
+    if os.path.isfile('iris_df.csv'):
+        
+        # If csv file exists read in data from csv file.
+        df = pd.read_csv('iris_df.csv', index_col=0)
+        
+    else:
+        
+        # Read fresh data from db into a DataFrame
+        df = new_iris_data()
+        
+        # Cache data
+        df.to_csv('iris_df.csv')
+        
+    return df
+
+# getting titanic db from a csv
+
+def get_titanic_data():
+    '''
+    This function reads in titanic data from Codeup database, writes data to
+    a csv file if a local file does not exist, and returns a df.
+    '''
+    if os.path.isfile('titanic_df.csv'):
+        
+        # If csv file exists, read in data from csv file.
+        df = pd.read_csv('titanic_df.csv', index_col=0)
+        
+    else:
+        
+        # Read fresh data from db into a DataFrame.
+        df = new_titanic_data()
+        
+        # Write DataFrame to a csv file.
+        df.to_csv('titanic_df.csv')
+        
+    return df
