@@ -28,7 +28,7 @@ def get_titanic_data():
     and returns a pandas DataFrame with all columns/values.
     '''
     sql_query = 'SELECT * FROM passengers'
-    return pd.read_sql(sql_query, get_connection('titantic_db'))
+    return pd.read_sql(sql_query, get_connection('titanic_db'))
 
 # Make a function named get_iris_data that returns the data from the iris_db on the codeup data science 
 # database as a pandas data frame. The returned data frame should include the actual name of the species 
