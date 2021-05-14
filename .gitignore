@@ -1,11 +1,11 @@
 DS_Store
 .DS_Store
+.vscode/
+.json
+*.csv
+untitled*.ipynb
 env.py
 .ipynb_checkpoints/
 __pycache__
-.vscode/.json
-.json
-.csv
-untitled*.ipynb
-titanic.csv
-iris.csv
+Thumbs.db
+*.xlsx
