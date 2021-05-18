@@ -1,7 +1,10 @@
 import pandas as pd
 import numpy as np
 import os
+from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 from env import host, user, password
+
 # general framework / template
 def get_connection(db, user=user, host=host, password=password):
     '''
@@ -9,6 +12,8 @@ def get_connection(db, user=user, host=host, password=password):
     the Codeup database.
     '''
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
+
+################ iris tools ##############################
 
 def prep_iris(df):
     '''
@@ -25,10 +30,23 @@ def prep_iris(df):
     df = pd.concat([df, dummy_df], axis=1)
     return df
 
+def iris_split(df):
+    '''
+    This function will take in the iris data acquired by get_iris_data,
+    performs a split, and stratifies column.
+    Returnd train, validate, and test DataFrames.
+    '''
+    train_validate, test = train_test_split(df, test_size=0.2,
+                            random_state=1221,
+                            stratify=df.species)
+    train, validate = train_test_split(train_validate, test_size=0.3,
+                                    random_state=1221,
+                                    stratify=train_validate.species)
+    return train, validate, test
 
 ################## Titanic Time#########################
 
-def titantic_split(df):
+def titanic_split(df):
     '''
     This function will take in the titanic data acquired by get_titanic_data,
     performs a split, and stratifies column.
@@ -88,4 +106,19 @@ def prep_titanic(df):
     # impute mean of age into null values in age column
     train, validate, test = impute_mean_age(train, validate, test)
     
+    return train, validate, test
+
+
+########### To Code along with Madeleine #################
+
+def train_validate_test_split(df, seed=123):
+    train_and_validate, test = train_test_split(
+        df, test_size=0.2, random_state=seed, stratify=df.survived
+    )
+    train, validate = train_test_split(
+        train_and_validate,
+        test_size=0.3,
+        random_state=seed,
+        stratify=train_and_validate.survived,
+    )
     return train, validate, test
