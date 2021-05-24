@@ -208,7 +208,7 @@ def compare (model1, model2, X_df,y_df):
     ''')
     conf_1_styler = cf1.style.set_table_attributes("style='display:inline'").set_caption('Model 1 Confusion Matrix')
     conf_2_styler = cf2.style.set_table_attributes("style='display:inline'").set_caption('Model 2 Confusion Matrix')
-    space = "\xa0" * 10
+    space = "\xa0" * 20
     display_html(conf_1_styler._repr_html_()+ space  + conf_2_styler._repr_html_(), raw=True)
     print('''
 
@@ -218,7 +218,7 @@ def compare (model1, model2, X_df,y_df):
     ''')
     clas_rep1_styler = clas_rep1.style.set_table_attributes("style='display:inline'").set_caption('Model 1 Classification Report')
     clas_rep2_styler = clas_rep2.style.set_table_attributes("style='display:inline'").set_caption('Model 2 Classification Report')
-    space = "\xa0" * 10
+    space = "\xa0" * 20
     display_html(clas_rep1_styler._repr_html_()+ space  + clas_rep2_styler._repr_html_(), raw=True)
 
 ############################################################################
@@ -309,7 +309,7 @@ def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
     ''')
     cf_train_styler = cf_train.style.set_table_attributes("style='display:inline'").set_caption('Train Confusion Matrix')
     cf_validate_styler = cf_validate.style.set_table_attributes("style='display:inline'").set_caption('Validate Confusion Matrix')
-    space = "\xa0" * 10
+    space = "\xa0" * 30
     display_html(cf_train_styler._repr_html_()+ space  + cf_validate_styler._repr_html_(), raw=True)
     print('''
 
