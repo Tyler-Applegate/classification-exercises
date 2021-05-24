@@ -10,7 +10,7 @@ from sklearn.metrics import recall_score
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
-from IPython.display import display
+from IPython.display import display, display_html 
 
 
 
@@ -219,14 +219,14 @@ def compare (model1, model2, X_df,y_df):
 
 def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
     '''
-    Take in a X_df, y_df and model  and fit the model , make a prediction, calculate score (accuracy), 
+    Take in a X_train, y_train, X_validate, y_validate and model  and fit the model , make a prediction, calculate score (accuracy), 
     confusion matrix, rates, clasification report.
     X_df: train, validate or  test. Select one
     y_df: it has to be the same as X_df.
     model: name of your model that you prevously created 
     
     Example:
-    mmodel_performs (X_train, y_train, model1)
+    
     '''
     
     
@@ -301,11 +301,17 @@ def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
 
     Confusion Matrix
     ''')
-    display(cf_train, cf_validate)
+    cf_train_styler = cf_train.style.set_table_attributes("style='display:inline'").set_caption('Train Confusion Matrix')
+    cf_validate_styler = cf_validate.style.set_table_attributes("style='display:inline'").set_caption('Validate Confusion Matrix')
+    space = "\xa0" * 10
+    display_html(cf_train_styler._repr_html_()+ space  + cf_validate_styler._repr_html_(), raw=True)
     print('''
 
     ________________________________________________________________________________
     
     Classification Report:
     ''')
-    display(clas_rep_train), display(clas_rep_validate)
+    clas_rep_train_styler = clas_rep_train.style.set_table_attributes("style='display:inline'").set_caption('Train Classification Report')
+    clas_rep_validate_styler = clas_rep_validate.style.set_table_attributes("style='display:inline'").set_caption('Validate Classification Report')
+    space = "\xa0" * 10
+    display_html(clas_rep_train_styler._repr_html_()+ space  + clas_rep_validate_styler._repr_html_(), raw=True)
