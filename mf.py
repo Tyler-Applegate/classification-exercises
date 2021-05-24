@@ -206,14 +206,20 @@ def compare (model1, model2, X_df,y_df):
 
     Confusion Matrix
     ''')
-    display(cf1), display(cf2)
+    conf_1_styler = cf1.style.set_table_attributes("style='display:inline'").set_caption('Model 1 Confusion Matrix')
+    conf_2_styler = cf2.style.set_table_attributes("style='display:inline'").set_caption('Model 2 Confusion Matrix')
+    space = "\xa0" * 10
+    display_html(conf_1_styler._repr_html_()+ space  + conf_2_styler._repr_html_(), raw=True)
     print('''
 
     ________________________________________________________________________________
     
     Classification Report:
     ''')
-    display(clas_rep1), display(clas_rep2)
+    clas_rep1_styler = clas_rep1.style.set_table_attributes("style='display:inline'").set_caption('Model 1 Classification Report')
+    clas_rep2_styler = clas_rep2.style.set_table_attributes("style='display:inline'").set_caption('Model 2 Classification Report')
+    space = "\xa0" * 10
+    display_html(clas_rep1_styler._repr_html_()+ space  + clas_rep2_styler._repr_html_(), raw=True)
 
 ############################################################################
 
@@ -244,13 +250,13 @@ def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
     #model 1
     conf_train = confusion_matrix(y_train, pred_train)
     mat_train =  pd.DataFrame ((confusion_matrix(y_train, pred_train )),index = ['actual_dead','actual_survived'], columns =['pred_dead','pred_survived' ])
-    rubric_df = pd.DataFrame([['True Negative', 'False positive'], ['False Negative', 'True Positive']], columns=mat_train.columns, index=mat_train.index)
-    cf_train = rubric_df + ': ' + mat_train.values.astype(str)
+    rubric_df = pd.DataFrame([['TN', 'FP'], ['FN', 'TP']], columns=mat_train.columns, index=mat_train.index)
+    cf_train = rubric_df + ' : ' + mat_train.values.astype(str)
     
     #model2
     conf_validate = confusion_matrix(y_validate, pred_validate)
     mat_validate =  pd.DataFrame ((confusion_matrix(y_validate, pred_validate )),index = ['actual_dead','actual_survived'], columns =['pred_dead','pred_survived' ])
-    cf_validate = rubric_df + ': ' + mat_validate.values.astype(str)
+    cf_validate = rubric_df + ' : ' + mat_validate.values.astype(str)
     #model 1
     #assign the values
     tp = conf_train[1,1]
@@ -286,7 +292,7 @@ def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
     clas_rep_validate =pd.DataFrame(classification_report(y_validate, pred_validate, output_dict=True)).T
     clas_rep_validate.rename(index={'0': "dead", '1': "survived"}, inplace = True)
     print(f'''
-    ******       Train  ******                                ******     Validate  ****** 
+    ******       Train    ******                                ******     Validate    ****** 
        Overall Accuracy:  {acc_train:.2%}              |                Overall Accuracy:  {acc_validate:.2%}  
                                                 
      True Positive Rate:  {tpr_train:.2%}              |          The True Positive Rate:  {tpr_validate:.2%}  
@@ -294,7 +300,7 @@ def compare_train_validate (model, X_train, y_train, X_validate, y_validate):
      True Negative Rate:  {tnr_train:.2%}              |          The True Negative Rate:  {tnr_validate:.2%} 
     False Negative Rate:  {fnr_train:.2%}              |         The False Negative Rate:  {fnr_validate:.2%}
 
-    _____________________________________________________________________________________________________________
+    _________________________________________________________________________________
     ''')
     print('''
     Positive =  'survived'
